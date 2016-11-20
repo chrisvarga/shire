@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-    <h1 class="login-h1">login</h1>
+    <h1 class="heading">login</h1>
     <form action="" method="post">
         <input type="text" placeholder="Username" name="username" value="{{
         request.form.username }}"><br />
@@ -10,7 +10,6 @@
     </form>
 
     {% if error %}
-        <p class="error">Error:{{ error }}</p>
+        <p class="error">Error: {{ error }}</p>
     {% endif %}
 {% endblock %}
-</html>

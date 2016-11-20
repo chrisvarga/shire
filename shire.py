@@ -71,7 +71,6 @@ def login():
             return redirect(url_for('quests'))
     return render_template('login.html', error=error)
 
-
 @app.route('/signup/', methods=['GET', 'POST'])
 def signup():
     if g.user:
@@ -96,11 +95,13 @@ def signup():
             error = 'Username taken, please try another one'
         else:
             db = get_db()
+            race   = int(request.form['race'])
+            cls    = int(request.form['class'])
+            gender = int(request.form['gender'])
             db.execute('''insert into user (username,pw_hash,race,class,gender)
-                    values (?,?,?,?)''',[request.form['username'],
+                    values (?,?,?,?,?)''',[request.form['username'],
                         hash_password(request.form['password']),
-                        request.form['race'],request.form['class'],
-                        request.form['gender']])
+                        race,cls,gender])
             db.commit()
             return redirect(url_for('login'))
     return render_template('signup.html', error=error)
@@ -146,7 +147,7 @@ def init_db():
         db.commit()
 
 def get_user_info(username):
-    rv = query_db('select * from user where username = ?', [username], one=True)
+    rv = query_db('select * from user where username = ?', [username])
     return rv[0] if rv else None
 
 #

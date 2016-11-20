@@ -1,11 +1,5 @@
-<head>
-    <link href="{{ url_for('static', filename='stylesheets/style.css') }}" rel="stylesheet" />
-    <link href="{{font_url}}" rel="stylesheet" />
-</head>
-<body>
-    <center>
-        <h1 style="margin-top: 200px">Oops, we can't find that page.</h1>
+{% extends "layout.html" %}
+{% block body %}
+        <h1 class="heading">Oops, we can't find that page.</h1>
         <h3>"I lost my way... Twice..." - Thorin Oakenshield</h3>
-    </center>
-</body>
-</html>
+{% endblock %}
