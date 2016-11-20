@@ -1,0 +1,24 @@
+<html>
+<head>
+    <link href="{{ url_for('static', filename='stylesheets/style.css') }}" rel="stylesheet" />
+    <link href="{{font_url}}" rel="stylesheet" />
+</head>
+<body>
+    <center>
+    <h1 style="margin-top: 200px">sign up</h1>
+    <form action="" method="post">
+        <input type="text" placeholder="Username" name="username" value="{{
+        request.form.username }}"><br />
+        <input type="password" placeholder="Password" name="password1" value="{{
+        request.form.password1 }}"><br />
+        <input type="password" placeholder="Confirm Password" name="password2" value="{{
+        request.form.password2 }}"><br />
+        <input class="btn btn-default" type="submit" value="Sign Up">
+    </form>
+
+    {% if error %}
+    <p class="error"><strong>Error:</strong> {{ error }}
+    {% endif %}
+    </center>
+</body>
+</html>
