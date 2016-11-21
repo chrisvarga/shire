@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+    <table class="quests">
+        <tr>
+            <th>Quests</th>
+            <th>Posts</th>
+        </tr>
+    {% for quest in quests %}
+        <tr>
+            <td><a href='{{url_for('quests')}}{{quest['quest_id']}}'>{{ quest['title'] }}</a></td>
+            <td>{{quest['post_count']}}</td>
+        </tr>
+    {% endfor %}
+    {% if g.user %}
+        <a href={{url_for('add_quest')}}>add quest</a>
+    {% endif %}
+{% endblock %}

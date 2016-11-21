@@ -11,7 +11,6 @@ import bcrypt
 # config
 #
 DATABASE = 'data.db'
-PER_PAGE = 30
 
 #
 # app
@@ -27,7 +26,9 @@ def before_request():
     g.user = None
     if 'username' in session:
         g.user = query_db('select * from user where username = ?',
-                [session['username']])
+                [session['username']],one=True)
+        if g.user:
+            g.user = dict(g.user)
 
 #
 # routes
@@ -52,8 +53,42 @@ def profile():
 
 @app.route('/quests/')
 def quests():
-    quests = query_db('select * from quest')
+    quests = query_db('''select q.*, count(p.post_id) as post_count from
+            quest q left join post p on p.quest_id=q.quest_id group by q.quest_id''')
     return render_template('quests.html', quests=quests)
+
+@app.route('/quests/<int:quest_id>/', methods=['POST','GET'])
+def quest(quest_id):
+    posts = query_db('''select * from post join user where post.author_id=user.user_id and post.quest_id = ?''',[quest_id])
+    error = None
+    if g.user:
+        if request.method == 'POST':
+            if not request.form['text']:
+                error = "Empty message"
+            else:
+                db = get_db()
+                db.execute('insert into post (author_id,quest_id,text) values (?,?,?)',
+                        [g.user['user_id'],quest_id,request.form['text']])
+                db.commit()
+                return redirect(url_for('quest',quest_id=quest_id))
+    return render_template('posts.html', posts=posts, error=error)
+
+@app.route('/add_quest/', methods=['GET', 'POST'])
+def add_quest():
+    error = None
+    if g.user:
+        if request.method == 'POST':
+            if not request.form['title']:
+                error = "Missing quest title"
+            else:
+                db = get_db()
+                db.execute('insert into quest (title) values (?)',
+                        [request.form['title']])
+                db.commit()
+                return redirect(url_for('quests'))
+        return render_template('add_quest.html',error=error)
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -63,9 +98,9 @@ def login():
     if request.method == 'POST':
         user = get_user_info(request.form['username'])
         if user is None:
-            error = 'Invalid username'
+            error = 'Invalid username or password'
         elif not check_password(request.form['password'],user['pw_hash']):
-            error = 'Invalid password'
+            error = 'Invalid username or password'
         else:
             session['username'] = user['username']
             return redirect(url_for('quests'))
@@ -95,16 +130,38 @@ def signup():
             error = 'Username taken, please try another one'
         else:
             db = get_db()
-            race   = int(request.form['race'])
-            cls    = int(request.form['class'])
-            gender = int(request.form['gender'])
             db.execute('''insert into user (username,pw_hash,race,class,gender)
                     values (?,?,?,?,?)''',[request.form['username'],
                         hash_password(request.form['password']),
-                        race,cls,gender])
+                        request.form['race'],request.form['class'],
+                        request.form['gender']])
             db.commit()
             return redirect(url_for('login'))
     return render_template('signup.html', error=error)
+
+@app.route('/stats/')
+def stats():
+    num_dwarves = query_db('select count(*) from user where race="Dwarf"',one=True)
+    num_humans = query_db('select count(*) from user where race="Human"',one=True)
+    num_elves = query_db('select count(*) from user where race="Elf"',one=True)
+    num_hobbits = query_db('select count(*) from user where race="Hobbit"',one=True)
+    num_users = query_db('select count(*) from user',one=True)
+    num_wizards = query_db('select count(*) from user where class="Wizard"',one=True)
+    num_warriors = query_db('select count(*) from user where class="Warrior"',one=True)
+    num_rangers = query_db('select count(*) from user where class="Ranger"',one=True)
+    num_enchanters = query_db('select count(*) from user where class="Enchanter"',one=True)
+    stats = {
+        'num_dwarves'    : num_dwarves[0],
+        'num_humans'     : num_humans[0],
+        'num_elves'      : num_elves[0],
+        'num_hobbits'    : num_hobbits[0],
+        'num_users'      : num_users[0],
+        'num_wizards'    : num_wizards[0],
+        'num_warriors'   : num_warriors[0],
+        'num_rangers'    : num_rangers[0],
+        'num_enchanters' : num_enchanters[0]
+    }
+    return render_template('stats.html', stats=stats)
 
 @app.route('/logout')
 def logout():

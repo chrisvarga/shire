@@ -3,9 +3,9 @@ create table user (
     user_id integer primary key autoincrement,
     username text not null,
     pw_hash text not null,
-    race integer not null,
-    class integer not null,
-    gender integer not null
+    race text not null,
+    class text not null,
+    gender text not null
 );
 
 drop table if exists post;
@@ -20,6 +20,5 @@ create table post (
 drop table if exists quest;
 create table quest (
     quest_id integer primary key autoincrement,
-    title text not null,
-    creation_date text
+    title text not null
 );
