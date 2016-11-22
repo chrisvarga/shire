@@ -6,6 +6,8 @@ import datetime
 import sqlite3
 import time
 import bcrypt
+import pygal
+from pygal.style import TurquoiseStyle
 
 #
 # config
@@ -90,7 +92,7 @@ def add_quest():
     else:
         return redirect(url_for('login'))
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     if g.user:
         return redirect(url_for('quests'))
@@ -141,27 +143,41 @@ def signup():
 
 @app.route('/stats/')
 def stats():
-    num_dwarves = query_db('select count(*) from user where race="Dwarf"',one=True)
-    num_humans = query_db('select count(*) from user where race="Human"',one=True)
-    num_elves = query_db('select count(*) from user where race="Elf"',one=True)
-    num_hobbits = query_db('select count(*) from user where race="Hobbit"',one=True)
-    num_users = query_db('select count(*) from user',one=True)
-    num_wizards = query_db('select count(*) from user where class="Wizard"',one=True)
-    num_warriors = query_db('select count(*) from user where class="Warrior"',one=True)
-    num_rangers = query_db('select count(*) from user where class="Ranger"',one=True)
-    num_enchanters = query_db('select count(*) from user where class="Enchanter"',one=True)
-    stats = {
-        'num_dwarves'    : num_dwarves[0],
-        'num_humans'     : num_humans[0],
-        'num_elves'      : num_elves[0],
-        'num_hobbits'    : num_hobbits[0],
-        'num_users'      : num_users[0],
-        'num_wizards'    : num_wizards[0],
-        'num_warriors'   : num_warriors[0],
-        'num_rangers'    : num_rangers[0],
-        'num_enchanters' : num_enchanters[0]
-    }
-    return render_template('stats.html', stats=stats)
+    num_users = float(query_db('select count(*) as num_users from user',one=True)[0])
+    num_dwarves = (query_db('select count(*) as num_dwarves from user where race="Dwarf"',one=True)[0]/num_users)*100
+    num_humans = (query_db('select count(*) as num_humans from user where race="Human"',one=True)[0]/num_users)*100
+    num_elves = (query_db('select count(*) from user where race="Elf"',one=True)[0]/num_users)*100
+    num_hobbits = (query_db('select count(*) from user where race="Hobbit"',one=True)[0]/num_users)*100
+    num_wizards = (query_db('select count(*) from user where class="Wizard"',one=True)[0]/num_users)*100
+    num_warriors = (query_db('select count(*) from user where class="Warrior"',one=True)[0]/num_users)*100
+    num_rangers = (query_db('select count(*) from user where class="Ranger"',one=True)[0]/num_users)*100
+    num_enchanters = (query_db('select count(*) from user where class="Enchanter"',one=True)[0]/num_users)*100
+    num_male = (query_db('select count(*) from user where gender="male"',one=True)[0]/num_users)*100
+    num_female = (query_db('select count(*) from user where gender="female"',one=True)[0]/num_users)*100
+
+    race_chart = pygal.Pie(height=200,style=TurquoiseStyle)
+    race_chart.title = 'races'
+    race_chart.add('Dwarves', round(num_dwarves,2))
+    race_chart.add('Humans', round(num_humans,2))
+    race_chart.add('Elves', round(num_elves,2))
+    race_chart.add('Hobbits', round(num_hobbits,2))
+    race_chart = race_chart.render_data_uri()
+
+    class_chart = pygal.Pie(height=200,style=TurquoiseStyle)
+    class_chart.title = 'classes'
+    class_chart.add('Wizards', round(num_wizards,2))
+    class_chart.add('Warriors', round(num_warriors,2))
+    class_chart.add('Rangers', round(num_rangers,2))
+    class_chart.add('Enchanters', round(num_enchanters,2))
+    class_chart = class_chart.render_data_uri()
+
+    gender_chart = pygal.Pie(height=200,style=TurquoiseStyle)
+    gender_chart.title = 'gender'
+    gender_chart.add('Male', round(num_male,1))
+    gender_chart.add('Female', round(num_female,1))
+    gender_chart = gender_chart.render_data_uri()
+
+    return render_template('stats.html', num_users=int(num_users),race_chart=race_chart, class_chart=class_chart,gender_chart=gender_chart)
 
 @app.route('/logout')
 def logout():

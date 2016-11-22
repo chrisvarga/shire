@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
 <h1 class="heading">shire statistics</h1>
-<p>number of users: {{stats['num_users']}}</p>
-<p>dwarves: {{stats['num_dwarves']}}</p>
-<p>humans: {{stats['num_humans']}}</p>
-<p>elves: {{stats['num_elves']}}</p>
-<p>hobbits: {{stats['num_hobbits']}}</p>
-<p>wizards: {{stats['num_wizards']}}</p>
-<p>warriors: {{stats['num_warriors']}}</p>
-<p>rangers: {{stats['num_rangers']}}</p>
-<p>enchanters: {{stats['num_enchanters']}}</p>
+<h2>users: {{num_users}}</h2>
+<div id="chart">
+   <embed type="image/svg+xml" src= {{ race_chart|safe }} />
+</div>
+<div id="chart">
+   <embed type="image/svg+xml" src= {{ class_chart|safe }} />
+</div>
+<div id="chart">
+   <embed type="image/svg+xml" src= {{ gender_chart|safe }} />
+</div>
 {% endblock %}
