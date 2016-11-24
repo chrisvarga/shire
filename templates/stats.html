@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1 class="heading">shire statistics</h1>
-<h2>users: {{num_users}}</h2>
+<h1 class="heading">users: {{num_users}}</h2>
 <div id="chart">
    <embed type="image/svg+xml" src= {{ race_chart|safe }} />
 </div>

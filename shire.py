@@ -7,7 +7,7 @@ import sqlite3
 import time
 import bcrypt
 import pygal
-from pygal.style import TurquoiseStyle
+from pygal.style import DarkGreenStyle
 
 #
 # config
@@ -155,7 +155,7 @@ def stats():
     num_male = (query_db('select count(*) from user where gender="male"',one=True)[0]/num_users)*100
     num_female = (query_db('select count(*) from user where gender="female"',one=True)[0]/num_users)*100
 
-    race_chart = pygal.Pie(height=200,style=TurquoiseStyle)
+    race_chart = pygal.Pie(height=200,style=DarkGreenStyle)
     race_chart.title = 'races'
     race_chart.add('Dwarves', round(num_dwarves,2))
     race_chart.add('Humans', round(num_humans,2))
@@ -163,7 +163,7 @@ def stats():
     race_chart.add('Hobbits', round(num_hobbits,2))
     race_chart = race_chart.render_data_uri()
 
-    class_chart = pygal.Pie(height=200,style=TurquoiseStyle)
+    class_chart = pygal.Pie(height=200,style=DarkGreenStyle)
     class_chart.title = 'classes'
     class_chart.add('Wizards', round(num_wizards,2))
     class_chart.add('Warriors', round(num_warriors,2))
@@ -171,7 +171,7 @@ def stats():
     class_chart.add('Enchanters', round(num_enchanters,2))
     class_chart = class_chart.render_data_uri()
 
-    gender_chart = pygal.Pie(height=200,style=TurquoiseStyle)
+    gender_chart = pygal.Pie(height=200,style=DarkGreenStyle)
     gender_chart.title = 'gender'
     gender_chart.add('Male', round(num_male,1))
     gender_chart.add('Female', round(num_female,1))
