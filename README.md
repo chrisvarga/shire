@@ -1,10 +1,15 @@
 # shire
 ## online role-playing forum
 
-## Setup
+![alt tag](static/shire.png)
+
+## Initial Setup
 ```
 $ pip install -f requirements.txt  
-$ export FLASK_APP='shire.py'  
 $ flask initdb  
+```
+## Running Locally
+```
+$ export FLASK_APP='shire.py'  
 $ flask run
 ```
