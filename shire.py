@@ -122,12 +122,6 @@ def signup():
             error = 'The two passwords do not match'
         elif len(request.form['password']) < 5:
             error = 'Password must be at least 5 characters'
-        elif not request.form['race']:
-            error = 'Missing race'
-        elif not request.form['class']:
-            error = 'Missing class'
-        elif not request.form['gender']:
-            error = 'Missing gender'
         elif get_user_info(request.form['username']) is not None:
             error = 'Username taken, please try another one'
         else:
