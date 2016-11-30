@@ -151,24 +151,30 @@ def stats():
 
     race_chart = pygal.Pie(height=200,style=DarkGreenStyle)
     race_chart.title = 'races'
-    race_chart.add('Dwarves', round(num_dwarves,2))
-    race_chart.add('Humans', round(num_humans,2))
-    race_chart.add('Elves', round(num_elves,2))
-    race_chart.add('Hobbits', round(num_hobbits,2))
+    race_chart.add('Dwarves', num_dwarves)
+    race_chart.add('Humans', num_humans)
+    race_chart.add('Elves', num_elves)
+    race_chart.add('Hobbits', num_hobbits)
+    race_chart.value_formatter = lambda x: "%.2f" % x
+    race_chart.value_formatter = lambda x: '%s%%' % x
     race_chart = race_chart.render_data_uri()
 
     class_chart = pygal.Pie(height=200,style=DarkGreenStyle)
     class_chart.title = 'classes'
-    class_chart.add('Wizards', round(num_wizards,2))
-    class_chart.add('Warriors', round(num_warriors,2))
-    class_chart.add('Rangers', round(num_rangers,2))
-    class_chart.add('Enchanters', round(num_enchanters,2))
+    class_chart.add('Wizards', num_wizards)
+    class_chart.add('Warriors', num_warriors)
+    class_chart.add('Rangers', num_rangers)
+    class_chart.add('Enchanters', num_enchanters)
+    class_chart.value_formatter = lambda x: "%.2f" % x
+    class_chart.value_formatter = lambda x: '%s%%' % x
     class_chart = class_chart.render_data_uri()
 
     gender_chart = pygal.Pie(height=200,style=DarkGreenStyle)
     gender_chart.title = 'gender'
     gender_chart.add('Male', round(num_male,1))
     gender_chart.add('Female', round(num_female,1))
+    gender_chart.value_formatter = lambda x: "%.2f" % x
+    gender_chart.value_formatter = lambda x: '%s%%' % x
     gender_chart = gender_chart.render_data_uri()
 
     return render_template('stats.html', num_users=int(num_users),race_chart=race_chart, class_chart=class_chart,gender_chart=gender_chart)
