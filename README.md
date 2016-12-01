@@ -5,7 +5,7 @@
 
 ## Initial Setup
 ```
-$ pip install -f requirements.txt  
+$ pip install -r requirements.txt  
 $ flask initdb  
 ```
 ## Running Locally
