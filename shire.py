@@ -139,6 +139,31 @@ def signup():
 @app.route('/stats/')
 def stats():
     num_users = float(query_db('select count(*) as num_users from user',one=True)[0])
+    if num_users < 1:
+        race_chart = pygal.Pie(height=200,style=DarkGreenStyle)
+        race_chart.title = 'races'
+        race_chart.add('Dwarves', 0)
+        race_chart.add('Humans', 0)
+        race_chart.add('Elves', 0)
+        race_chart.add('Hobbits', 0)
+        race_chart = race_chart.render_data_uri()
+
+        class_chart = pygal.Pie(height=200,style=DarkGreenStyle)
+        class_chart.title = 'classes'
+        class_chart.add('Wizards', 0)
+        class_chart.add('Warriors', 0)
+        class_chart.add('Rangers', 0)
+        class_chart.add('Enchanters', 0)
+        class_chart = class_chart.render_data_uri()
+
+        gender_chart = pygal.Pie(height=200,style=DarkGreenStyle)
+        gender_chart.title = 'gender'
+        gender_chart.add('Male', 0)
+        gender_chart.add('Female', 0)
+        gender_chart = gender_chart.render_data_uri()
+
+        return render_template('stats.html', num_users=0, race_chart=race_chart, class_chart=class_chart, gender_chart=gender_chart)
+
     num_dwarves = (query_db('select count(*) as num_dwarves from user where race="Dwarf"',one=True)[0]/num_users)*100
     num_humans = (query_db('select count(*) as num_humans from user where race="Human"',one=True)[0]/num_users)*100
     num_elves = (query_db('select count(*) from user where race="Elf"',one=True)[0]/num_users)*100
