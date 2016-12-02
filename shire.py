@@ -5,7 +5,7 @@ from flask import Flask, g, render_template, request, redirect, url_for, session
 import datetime
 import sqlite3
 import time
-import bcrypt
+from werkzeug.security import generate_password_hash, check_password_hash
 import pygal
 import os
 from pygal.style import DarkGreenStyle
@@ -228,10 +228,10 @@ def get_user_info(username):
 # authentication
 #
 def hash_password(plaintext_password):
-    return bcrypt.hashpw(plaintext_password, bcrypt.gensalt())
+    return generate_password_hash(plaintext_password, method='pbkdf2:sha256', salt_length=30)
 
 def check_password(plaintext_password, hashed_password):
-    return bcrypt.checkpw(plaintext_password, hashed_password)
+    return check_password_hash(hashed_password, plaintext_password)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
