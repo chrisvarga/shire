@@ -7,6 +7,7 @@ import sqlite3
 import time
 import bcrypt
 import pygal
+import os
 from pygal.style import DarkGreenStyle
 
 #
@@ -231,3 +232,7 @@ def hash_password(plaintext_password):
 
 def check_password(plaintext_password, hashed_password):
     return bcrypt.checkpw(plaintext_password, hashed_password)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
