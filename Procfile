@@ -1,1 +1,1 @@
-web: python shire/shire.py
+web: sh run_server.sh
