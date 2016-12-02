@@ -1,4 +1,4 @@
-# shire - by Chris Varga
+# shire
 ## online role-playing forum
 
 ![alt tag](static/shire.png)
