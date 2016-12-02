@@ -172,8 +172,8 @@ def stats():
     num_warriors = (query_db('select count(*) from user where class="Warrior"',one=True)[0]/num_users)*100
     num_rangers = (query_db('select count(*) from user where class="Ranger"',one=True)[0]/num_users)*100
     num_enchanters = (query_db('select count(*) from user where class="Enchanter"',one=True)[0]/num_users)*100
-    num_male = (query_db('select count(*) from user where gender="male"',one=True)[0]/num_users)*100
-    num_female = (query_db('select count(*) from user where gender="female"',one=True)[0]/num_users)*100
+    num_male = (query_db('select count(*) from user where gender="Male"',one=True)[0]/num_users)*100
+    num_female = (query_db('select count(*) from user where gender="Female"',one=True)[0]/num_users)*100
 
     race_chart = pygal.Pie(height=200,style=DarkGreenStyle)
     race_chart.title = 'races'
