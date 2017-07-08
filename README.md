@@ -5,14 +5,13 @@
 
 ## Initial Setup
 ```
-$ git clone https://github.com/chrisvarga/shire.git
-$ cd shire
-$ ./setup
+git clone https://github.com/chrisvarga/shire.git
+cd shire
+./setup
 ```
 
-## Running Local Development Server
+## Running Server
 ```
-$ export FLASK_APP=shire.py
-$ source env/bin/activate
-$ flask run --host=0.0.0.0
+source env/bin/activate
+gunicorn --bind 0.0.0.0:8000 shire:app
 ```

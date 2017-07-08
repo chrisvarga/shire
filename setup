@@ -1,26 +1,17 @@
 #!/bin/bash
 
-export FLASK_APP=shire.py
 
 if [ ! -d env ]; then
     echo "Installing shire dependencies..."
-    sleep 1
     virtualenv env
     . env/bin/activate
     pip install -r requirements.txt
 fi
 
 if [ ! -f data.db ]; then
+    export FLASK_APP=shire.py
     flask initdb
 fi
 
-sleep 1
-echo "Setup complete."
-sleep 2
-echo
-echo "To run local development server:"
-echo
-echo "export FLASK_APP=shire.py"
-echo ". env/bin/activate"
-echo "flask run --host=0.0.0.0"
-echo
+echo -e "Setup complete.\nTo run server:\n"
+echo -e "source env/bin/activate\ngunicorn --bind 0.0.0.0:8000 shire:app\n"
