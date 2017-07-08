@@ -5,12 +5,14 @@
 
 ## Initial Setup
 ```
-$ pip install -r requirements.txt  
-$ export FLASK_APP='shire.py'  
-$ flask initdb  
+$ git clone https://github.com/chrisvarga/shire.git
+$ cd shire
+$ ./setup
 ```
-## Running Locally
+
+## Running Local Development Server
 ```
-$ export FLASK_APP='shire.py'  
-$ flask run
+$ export FLASK_APP=shire.py
+$ source env/bin/activate
+$ flask run --host=0.0.0.0
 ```

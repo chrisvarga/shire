@@ -258,6 +258,6 @@ def hash_password(plaintext_password):
 def check_password(plaintext_password, hashed_password):
     return check_password_hash(hashed_password, plaintext_password)
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+#if __name__ == "__main__":
+    #port = int(os.environ.get("PORT", 80))
+    #app.run(host='0.0.0.0', port=port)
