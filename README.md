@@ -5,7 +5,6 @@
 
 ## Initial Setup
 ```
-git clone https://github.com/chrisvarga/shire.git
 cd shire
 ./setup
 ```
