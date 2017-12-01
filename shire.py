@@ -250,7 +250,7 @@ def get_user_info(username):
     return rv[0] if rv else None
 
 #
-# authentication is awesome
+# authentication
 #
 def hash_password(plaintext_password):
     return generate_password_hash(plaintext_password, method='pbkdf2:sha256', salt_length=30)
