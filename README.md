@@ -5,14 +5,14 @@
 
 ![alt tag](static/shire.png)
 
-## Initial Setup
+
+## Initial Database Setup
 ```
-cd shire
-./setup
+export FLASK_APP=shire.py
+flask initdb
 ```
 
 ## Running Server
 ```
-source env/bin/activate
 gunicorn --bind 0.0.0.0:8000 shire:app
 ```
