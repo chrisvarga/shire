@@ -5,7 +5,7 @@
             <th>Quests</th>
             <th>Posts</th>
         </tr>
-    {% for quest in quests %}
+    {% for quest in all_quests %}
         <tr>
             <td><a href='{{url_for('quests')}}{{quest['quest_id']}}'>{{ quest['title'] }}</a></td>
             <td>{{quest['post_count']}}</td>

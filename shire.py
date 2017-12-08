@@ -119,7 +119,7 @@ def add_quest():
     '''
     Add a new quest. We check to make sure the quest name isn't empty.
     '''
-    error = None
+    error = ''
     if g.user:
         if request.method == 'POST':
             if not request.form['title']:
@@ -276,10 +276,11 @@ def logout():
 # database
 #
 @SHIRE.teardown_appcontext
-def close_connection():
+def close_connection(exception):
     '''
     Close our database connection.
     '''
+    #pylint: disable=unused-argument
     database = getattr(g, '_database', None)
     if database is not None:
         database.close()
