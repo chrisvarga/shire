@@ -1,3 +1,5 @@
+https://travis-ci.org/chrisvarga/shire.svg?branch=master
+
 # shire
 ## online role-playing forum
 
