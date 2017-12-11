@@ -75,6 +75,14 @@ def index():
 
     return render_template('index.html')
 
+@SHIRE.route('/users/')
+def users():
+    '''
+    The users page shows a list of all usernames.
+    '''
+    all_users = query_db('select * from user')
+    return render_template('users.html', all_users=all_users)
+
 @SHIRE.route('/profile/')
 def profile():
     '''

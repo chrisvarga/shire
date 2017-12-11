@@ -95,3 +95,38 @@ a:hover {
 .profile {
     color: #adde09;
 }
+
+table.users {
+    margin: 30px auto;
+    text-align: center;
+    background-color: #9e5522;
+    border-radius: 5px;
+    color: black;
+    max-width: 1000px
+}
+
+table.users th {
+    padding: 8px;
+}
+
+table.users td {
+    padding: 8px;
+    background-color: #e6c991;
+}
+
+table.users td:hover {
+    background-color: #e9c16a;
+}
+
+table.users th:hover {
+    background-color: #e9c16a;
+}
+
+input {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

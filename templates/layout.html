@@ -10,6 +10,7 @@
   <h1 class="heading">The Shire</h1>
   <div class="navigation">
     <a href="{{ url_for('quests') }}">see quests</a> |
+    <a href="{{ url_for('users') }}">users</a> |
     <a href="{{ url_for('stats') }}">stats</a> |
   {% if g.user %}
     <a href="{{ url_for('profile') }}">profile</a> |
