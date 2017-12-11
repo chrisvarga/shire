@@ -1,9 +1,19 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="profile">
-    <h4>name: {{g.user['username']}}</h4>
-    <h4>race: {{g.user['race']}}</h4>
-    <h4>class: {{g.user['class']}}</h4>
-    <h4>gender: {{g.user['gender']}}</h4>
+    <table class="users">
+        <tr>
+            <th>Name</th>
+            <th>Race</th>
+            <th>Class</th>
+            <th>Gender</th>
+        </tr>
+	<tr>
+	    <td>{{g.user['username']}}</td>
+	    <td>{{g.user['race']}}</td>
+	    <td>{{g.user['class']}}</td>
+	    <td>{{g.user['gender']}}</td>
+	</tr>
+    </table>
 </div>
 {% endblock %}

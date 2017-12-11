@@ -92,8 +92,7 @@ a:hover {
 
 .post {
     padding: 20px;
-    border: 2px solid black;
-    margin-bottom: 1px;
+    border-bottom: 2px solid black;
 }
 
 .profile {
@@ -138,4 +137,9 @@ input {
 .btn-default:hover {
     background-color: #29952d;
     border-color: #29952d;
+    box-shadow: 0px 0px 8px 2px #f8f8f8;
+}
+
+.btn-default:active {
+    transform: translateY(2px);
 }
