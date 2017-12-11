@@ -22,6 +22,10 @@ form input {
     margin-bottom: 20px;
 }
 
+.error {
+    color: orange;
+}
+
 .page {
     margin: 100px;
     padding: 50px;
@@ -129,4 +133,9 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.btn-default:hover {
+    background-color: #29952d;
+    border-color: #29952d;
 }
