@@ -12,6 +12,6 @@
         </tr>
     {% endfor %}
     {% if g.user %}
-        <a href={{url_for('add_quest')}}>add quest</a>
+        <a class="addquest" href={{url_for('add_quest')}}>add quest</a>
     {% endif %}
 {% endblock %}

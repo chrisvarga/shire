@@ -143,3 +143,10 @@ input {
 .btn-default:active {
     transform: translateY(2px);
 }
+
+.addquest {
+    padding: 10px;
+    background-color: #29952d;
+    color: #161201;
+    border-radius: 8px;
+}
