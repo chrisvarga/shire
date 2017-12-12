@@ -37,13 +37,13 @@ NUM_CLASSES = {
 #
 # app
 #
-SHIRE = Flask(__name__)
-SHIRE.secret_key = '9\n\xa8N,\x8b\xb2\xb44u\x12rgu\xfd\x8d&\x03\xecr6J\xd5\xf0'
+app = Flask(__name__) # pylint: disable=C0103
+app.secret_key = '9\n\xa8N,\x8b\xb2\xb44u\x12rgu\xfd\x8d&\x03\xecr6J\xd5\xf0'
 
 #
 # session
 #
-@SHIRE.before_request
+@app.before_request
 def before_request():
     '''
     This function is run each time a request is made (before).
@@ -58,14 +58,14 @@ def before_request():
 #
 # routes
 #
-@SHIRE.errorhandler(404)
+@app.errorhandler(404)
 def page_not_found():
     '''
     Display a 404 page if the user tries to go to a nonexistent page.
     '''
     return render_template('404.html'), 404
 
-@SHIRE.route('/')
+@app.route('/')
 def index():
     '''
     Home page route.
@@ -75,7 +75,7 @@ def index():
 
     return render_template('index.html')
 
-@SHIRE.route('/users/')
+@app.route('/users/')
 def users():
     '''
     The users page shows a list of all usernames.
@@ -83,7 +83,7 @@ def users():
     all_users = query_db('select * from user')
     return render_template('users.html', all_users=all_users)
 
-@SHIRE.route('/profile/')
+@app.route('/profile/')
 def profile():
     '''
     The profile page displays information about a specific user.
@@ -93,7 +93,7 @@ def profile():
 
     return redirect(url_for('signup'))
 
-@SHIRE.route('/quests/')
+@app.route('/quests/')
 def quests():
     '''
     Display all quests, and the number of posts for each quest.
@@ -102,7 +102,7 @@ def quests():
             quest q left join post p on p.quest_id=q.quest_id group by q.quest_id''')
     return render_template('quests.html', all_quests=all_quests)
 
-@SHIRE.route('/quests/<int:quest_id>/', methods=['POST', 'GET'])
+@app.route('/quests/<int:quest_id>/', methods=['POST', 'GET'])
 def quest(quest_id):
     '''
     This is the specific page for a particular quest, showing all posts for it.
@@ -122,7 +122,7 @@ def quest(quest_id):
                 return redirect(url_for('quest', quest_id=quest_id))
     return render_template('posts.html', posts=posts, error=error)
 
-@SHIRE.route('/add_quest/', methods=['GET', 'POST'])
+@app.route('/add_quest/', methods=['GET', 'POST'])
 def add_quest():
     '''
     Add a new quest. We check to make sure the quest name isn't empty.
@@ -142,7 +142,7 @@ def add_quest():
     else:
         return redirect(url_for('login'))
 
-@SHIRE.route('/login/', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     '''
     Log the user in. If they are already logged in, redirect to quests page.
@@ -161,7 +161,7 @@ def login():
             return redirect(url_for('quests'))
     return render_template('login.html', error=error)
 
-@SHIRE.route('/signup/', methods=['GET', 'POST'])
+@app.route('/signup/', methods=['GET', 'POST'])
 def signup():
     '''
     Signup page. We validate username/password, and then create db entry if OK.
@@ -193,7 +193,7 @@ def signup():
             return redirect(url_for('login'))
     return render_template('signup.html', error=error)
 
-@SHIRE.route('/stats/')
+@app.route('/stats/')
 def stats():
     '''
     Display some fun stats about user demographics in pretty charts.
@@ -272,7 +272,7 @@ def stats():
     return render_template('stats.html', num_users=int(num_users), race_chart=race_chart,
                            class_chart=class_chart, gender_chart=gender_chart)
 
-@SHIRE.route('/logout')
+@app.route('/logout')
 def logout():
     '''
     Remove the username from the session if it's there.
@@ -283,7 +283,7 @@ def logout():
 #
 # database
 #
-@SHIRE.teardown_appcontext
+@app.teardown_appcontext
 def close_connection(exception):
     '''
     Close our database connection.
@@ -312,7 +312,7 @@ def query_db(query, args=(), one=False):
     data = cursor.fetchall()
     return (data[0] if data else None) if one else data
 
-@SHIRE.cli.command('initdb')
+@app.cli.command('initdb')
 def initdb_command():
     '''
     Called with 'flask initdb' to create the sqlite file before first use.
@@ -324,9 +324,9 @@ def init_db():
     '''
     Read in our schema file and create the sqilite database file.
     '''
-    with SHIRE.app_context():
+    with app.app_context():
         database = get_db()
-        with SHIRE.open_resource('schema.sql', mode='r') as fileptr:
+        with app.open_resource('schema.sql', mode='r') as fileptr:
             database.cursor().executescript(fileptr.read())
         database.commit()
 
@@ -356,4 +356,4 @@ def check_password(plaintext_password, hashed_password):
 # let shire be run with gunicorn
 #
 if __name__ == "__main__":
-    SHIRE.run()
+    app.run()
