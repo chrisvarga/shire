@@ -1,6 +1,6 @@
 '''
 shire.py
-  come join in the adventure!
+  It's a dangerous business going out your door. ~Bilbo
 '''
 
 #
@@ -17,6 +17,9 @@ from flask import Flask, g, render_template, request, redirect, url_for, session
 #
 DATABASE = 'data.db'
 
+#
+# globals
+#
 RACES = ['Dwarves', 'Humans', 'Elves', 'Hobbits']
 CLASSES = ['Wizards', 'Warriors', 'Rangers', 'Enchanters']
 
@@ -38,7 +41,7 @@ NUM_CLASSES = {
 # app
 #
 app = Flask(__name__) # pylint: disable=C0103
-app.secret_key = '9\n\xa8N,\x8b\xb2\xb44u\x12rgu\xfd\x8d&\x03\xecr6J\xd5\xf0'
+app.secret_key = 'dev'
 
 #
 # session
