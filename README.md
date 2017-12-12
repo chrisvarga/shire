@@ -14,5 +14,5 @@ flask initdb
 
 ## Running Server
 ```
-gunicorn --bind 0.0.0.0:8000 shire:SHIRE
+gunicorn --bind 0.0.0.0:8000 shire:app
 ```
