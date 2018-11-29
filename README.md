@@ -6,6 +6,15 @@
 ![alt tag](static/shire.png)
 
 
+## Installing Requirements
+```
+# From the project directory
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+```
+
+
 ## Initial Database Setup
 ```
 export FLASK_APP=shire.py
