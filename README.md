@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/chrisvarga/shire.svg?branch=master)](https://travis-ci.org/chrisvarga/shire)
-
 # shire
 ## online role-playing forum
 
